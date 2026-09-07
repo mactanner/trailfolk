@@ -1,32 +1,29 @@
-# React + TypeScript + Vite
+# Trailfolk Schweiz
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Trailfolk Schweiz ist eine kleine Demo-App für WebMCP. Sie zeigt, wie eine
+Wanderungsübersicht mit Filtern ausgestattet und zusätzlich von einem AI-Tool
+gesteuert werden kann.
 
-Currently, two official plugins are available:
+## Was es zu sehen gibt
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- 50 ausgewählte Wanderungen aus der Schweiz
+- Filter nach Region, Schwierigkeit, Weglänge, Gehzeit und Höhenmetern
+- Tourdaten wie Distanz, Aufstieg, Dauer und Höhe
+- Filter zurücksetzen und wieder alle Wanderungen anzeigen
+- WebMCP-Tools zum Filtern und Zurücksetzen:
+  `filter_hikes` und `reset_hike_filters`
 
-## React Compiler
+## Entwicklung
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm install
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Weitere verfügbare Scripts:
+
+```bash
+npm run build
+npm run lint
+npm run preview
+```
