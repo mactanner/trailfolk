@@ -1,0 +1,18 @@
+html {
+  scroll-behavior: smooth;
+}
+
+:root {
+  font-family: 'DM Sans', Arial, sans-serif;
+  color: #243630;
+  background: #f7f8f3;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+}
