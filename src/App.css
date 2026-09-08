@@ -34,10 +34,10 @@ a {
 }
 
 .page-shell {
-  max-width: 1440px;
+  max-width: 1680px;
   min-height: 100vh;
   margin: 0 auto;
-  padding: 0 5.5vw;
+  padding: 0 clamp(22px, 5.5vw, 88px);
 }
 
 .site-header {
@@ -124,10 +124,14 @@ nav a:hover,
 .hero {
   min-height: 480px;
   display: grid;
-  grid-template-columns: 0.85fr 1fr;
-  gap: 8vw;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+  gap: clamp(40px, 6vw, 96px);
   align-items: center;
   padding: 75px 0 83px;
+}
+
+.hero-copy {
+  min-width: 0;
 }
 
 .eyebrow,
@@ -214,6 +218,7 @@ h1 span {
 
 .hero-art {
   height: 370px;
+  width: 100%;
   position: relative;
   overflow: hidden;
   background: #d9e6dd;
@@ -552,6 +557,7 @@ select:focus {
   height: 210px;
   position: relative;
   overflow: hidden;
+  --card-color: #4c7890;
   background: var(--card-color);
   isolation: isolate;
 }
@@ -714,6 +720,13 @@ footer {
   border-top: 1px solid var(--line);
   color: var(--muted);
   font-size: 12px;
+}
+
+@media (max-width: 1100px) and (min-width: 801px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
+    gap: 42px;
+  }
 }
 
 @media (max-width: 800px) {
