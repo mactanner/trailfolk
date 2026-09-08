@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap');
 
 :root {
   --ink: #243630;
@@ -92,7 +92,7 @@ nav {
 nav a,
 .saved-button {
   color: var(--muted);
-  font-size: 14px;
+  font-size: 15px;
   text-decoration: none;
   transition: color 180ms ease;
 }
@@ -145,8 +145,9 @@ footer,
 .eyebrow {
   margin: 0 0 22px;
   color: var(--accent);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 500;
+  letter-spacing: 1px;
 }
 
 h1,
@@ -158,16 +159,16 @@ p {
 
 h1,
 h2 {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-weight: 500;
-  letter-spacing: -1.8px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  letter-spacing: -1.5px;
 }
 
 h1 {
   margin-bottom: 25px;
   color: var(--ink);
   font-size: clamp(48px, 6vw, 83px);
-  line-height: 0.99;
+  line-height: 1.04;
 }
 
 h1 span {
@@ -179,8 +180,8 @@ h1 span {
   max-width: 350px;
   margin-bottom: 28px;
   color: var(--muted);
-  font-size: 16px;
-  line-height: 1.7;
+  font-size: 17px;
+  line-height: 1.65;
 }
 
 .hero-link {
@@ -189,8 +190,8 @@ h1 span {
   align-items: center;
   color: var(--ink);
   font-family: 'DM Mono', monospace;
-  font-size: 13px;
-  letter-spacing: 1px;
+  font-size: 14px;
+  letter-spacing: 0.8px;
   text-decoration: none;
   text-transform: uppercase;
 }
@@ -297,13 +298,13 @@ h1 span {
 h2 {
   margin-bottom: 0;
   font-size: clamp(36px, 4vw, 54px);
-  line-height: 1;
+  line-height: 1.1;
 }
 
 .result-count {
   margin: 0 3px 8px 0;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .result-count strong {
@@ -356,8 +357,8 @@ h2 {
   flex: 0 0 auto;
   color: var(--accent);
   font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 1px;
+  font-size: 11px;
+  letter-spacing: 0.7px;
   text-transform: uppercase;
 }
 
@@ -374,8 +375,8 @@ h2 {
   background: rgba(225, 102, 59, 0.08);
   color: var(--ink);
   font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.3px;
+  font-size: 11px;
+  letter-spacing: 0.2px;
 }
 
 .filter-chip-muted {
@@ -422,8 +423,8 @@ h2 {
   margin: 0 0 7px;
   color: var(--accent);
   font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 1.2px;
+  font-size: 12px;
+  letter-spacing: 1px;
   text-transform: uppercase;
 }
 
@@ -432,8 +433,8 @@ h2 {
   padding-bottom: 20px;
   border-bottom: 1px solid var(--line);
   color: var(--muted);
-  font-size: 14px;
-  line-height: 1.55;
+  font-size: 15px;
+  line-height: 1.6;
 }
 
 .filters-heading button {
@@ -444,8 +445,8 @@ h2 {
   color: var(--muted);
   cursor: pointer;
   font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 1px;
+  font-size: 12px;
+  letter-spacing: 0.7px;
   text-transform: uppercase;
 }
 
@@ -453,14 +454,14 @@ h2 {
   margin-bottom: 10px;
   color: var(--ink);
   font-family: 'DM Sans', sans-serif;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
 }
 
 .filter-label strong {
   color: var(--accent);
   font-family: 'DM Mono', monospace;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 400;
 }
 
@@ -489,8 +490,8 @@ input[type='range']::-webkit-slider-thumb {
   justify-content: space-between;
   margin: 9px 0 27px;
   color: var(--muted);
-  font-size: 10px;
-  letter-spacing: 0.8px;
+  font-size: 11px;
+  letter-spacing: 0.4px;
 }
 
 select {
@@ -503,7 +504,7 @@ select {
   background: var(--paper);
   color: var(--ink);
   cursor: pointer;
-  font-size: 14px;
+  font-size: 15px;
 }
 
 select:focus {
@@ -526,9 +527,8 @@ select:focus {
 .filter-note p {
   margin: 0;
   color: var(--muted);
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 15px;
-  line-height: 1.45;
+  font-size: 16px;
+  line-height: 1.5;
 }
 
 .hike-grid {
@@ -590,8 +590,8 @@ select:focus {
   position: absolute;
   z-index: 2;
   color: rgba(255, 255, 255, 0.9);
-  font-size: 10px;
-  letter-spacing: 1px;
+  font-size: 11px;
+  letter-spacing: 0.7px;
 }
 
 .difficulty {
@@ -640,17 +640,18 @@ select:focus {
 .hike-region {
   margin-bottom: 8px;
   color: var(--accent);
-  font-size: 10px;
+  font-size: 11px;
 }
 
 .hike-content h3 {
   min-height: 24px;
   margin-bottom: 18px;
   color: var(--ink);
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 23px;
-  font-weight: 500;
-  letter-spacing: -0.5px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.6px;
+  line-height: 1.15;
 }
 
 .hike-meta {
@@ -659,7 +660,8 @@ select:focus {
   gap: 8px 16px;
   color: var(--muted);
   font-family: 'DM Mono', monospace;
-  font-size: 11px;
+  font-size: 12px;
+  line-height: 1.5;
 }
 
 .hike-meta b {
@@ -682,13 +684,14 @@ select:focus {
 
 .empty-state h3 {
   margin: 15px 0 8px;
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 24px;
+  font-weight: 600;
 }
 
 .empty-state p {
   color: var(--muted);
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .empty-state button {
@@ -710,7 +713,7 @@ footer {
   padding: 28px 0;
   border-top: 1px solid var(--line);
   color: var(--muted);
-  font-size: 11px;
+  font-size: 12px;
 }
 
 @media (max-width: 800px) {
@@ -765,12 +768,12 @@ footer {
   }
 
   .hike-content h3 {
-    font-size: 17px;
+    font-size: 18px;
   }
 
   .hike-meta {
     display: block;
-    font-size: 10px;
+    font-size: 11px;
     line-height: 1.9;
   }
 
@@ -808,6 +811,6 @@ footer {
   footer {
     gap: 12px;
     flex-wrap: wrap;
-    font-size: 8px;
+    font-size: 10px;
   }
 }
