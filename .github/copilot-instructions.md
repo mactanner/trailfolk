@@ -27,7 +27,8 @@ so no single-test command is available.
 ## Architecture
 
 - `src/main.tsx` is the browser entry point. It imports global styles and mounts
-  `App` under React `StrictMode`.
+  `App`. Do not wrap it in React `StrictMode`: WebMCP tool registration is an
+  external side effect and StrictMode repeats effects in development.
 - `src/App.tsx` owns the page UI, filter state, client-side filtering, active
   filter display, reset behavior, and WebMCP tool registration.
 - `src/hikes.ts` contains the static `Hike` records used by both the UI and
@@ -42,12 +43,25 @@ so no single-test command is available.
 - `index.html` defines the German document metadata, favicon, root element, and
   the `<webmcp>` host element before loading the TypeScript entry point.
 
-`App.tsx` registers two tools when WebMCP is available:
+``App.tsx` registers four tools when WebMCP is available:
 
 - `filter_hikes`: validates partial filter input, merges it with the current
-  filter state, updates the UI, and returns matching hike summaries.
+  filter state, updates the UI, and returns matching hike summaries. Use it
+  only when the user explicitly asks to change visible filters. It is
+  registered only while the Entdecken tab is active.
+- `recommend_hikes`: applies optional preferences as recommendation criteria,
+  ranks matching hikes, stores the results for the separate Inspiration tab,
+  and returns matching hike summaries with scores and reasons. It does not
+  change the manual filters or switch tabs automatically. Free-form wishes
+  belong in `preference`; do not also call `filter_hikes` for a recommendation.
+  It is registered only while the Inspiration tab is active.
+- `show_recommendation_summary`: accepts one prose explanation per recommended
+  hike and displays it directly on the corresponding card in the Inspiration
+  tab without switching tabs. It is registered only while the Inspiration tab
+  is active.
 - `reset_hike_filters`: restores the default filters and returns the total
-  number of hikes.
+  number of hikes. Recommendation state remains separate and is cleared from
+  the Inspiration tab explicitly.
 
 The registration effect uses an `AbortController` for cleanup. Preserve that
 lifecycle behavior when changing tool registration.
@@ -59,6 +73,10 @@ lifecycle behavior when changing tool registration.
   Translate those values at the UI boundary.
 - Keep filtering behavior consistent between manual controls and WebMCP. The
   `getFilteredHikes` function is the shared source of truth for matching hikes.
+- Keep recommendations separate from manual filters. `recommend_hikes` should
+  update recommendation state and explain why results match instead of
+  silently changing the visible filter controls. The user switches to the
+  Inspiration tab manually.
 - When adding or changing a filter, update all connected surfaces together:
   `HikeFilterInput`, `hikeFilterInputSchema`, validation in `App.tsx`, React
   state and refs, filter controls and summary chips, reset behavior, and the

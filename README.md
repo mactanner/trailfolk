@@ -10,8 +10,12 @@ gesteuert werden kann.
 - Filter nach Region, Schwierigkeit, Weglänge, Gehzeit und Höhenmetern
 - Tourdaten wie Distanz, Aufstieg, Dauer und Höhe
 - Filter zurücksetzen und wieder alle Wanderungen anzeigen
-- WebMCP-Tools zum Filtern und Zurücksetzen:
-  `filter_hikes` und `reset_hike_filters`
+- Separate Tabs für „Entdecken“ und „Inspiration“
+- AI-Empfehlungen mit kurzen Gründen passend zu optionalen Vorlieben
+- Anzeige der ausführlichen AI-Begründung direkt an den Empfehlungskarten
+- WebMCP-Tools zum Filtern, Empfehlen, Erklären und Zurücksetzen:
+  `filter_hikes`, `recommend_hikes`, `show_recommendation_summary` und
+  `reset_hike_filters`
 
 ## Entwicklung
 

@@ -7,7 +7,7 @@ declare global {
     inputSchema: {
       type: 'object'
       properties: Record<string, unknown>
-      required?: string[]
+      required?: readonly string[]
     }
     annotations?: {
       readOnlyHint?: boolean
