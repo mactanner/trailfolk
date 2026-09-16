@@ -576,19 +576,12 @@ function App() {
             <section className="hero" id="about">
           <div className="hero-copy">
             <p className="eyebrow">Ausgewählte Wanderungen aus der Schweiz</p>
-            <h1>Finde deine nächste<br /><span>Berggeschichte.</span></h1>
+            <h1>Finde deine nächste <span>Berggeschichte.</span></h1>
             <p className="hero-intro">
-              Fünfzig abwechslungsreiche Wanderungen durch die Schweiz – von stillen Wegen
-              am See bis zu hochalpinen Abenteuern.
+              Fünfzig abwechslungsreiche Wanderungen durch die Schweiz.<br />
+              Von stillen Wegen am See bis zu hochalpinen Abenteuern.
             </p>
-            <a className="hero-link" href="#explore">Jetzt entdecken <span>↓</span></a>
-          </div>
-          <div className="hero-art" aria-label="Illustration der Schweizer Alpen" role="img">
-            <div className="sun" />
-            <div className="mountain mountain-back" />
-            <div className="mountain mountain-front" />
-            <div className="hero-lake" />
-            <span className="hero-art-label">46°48′N · 9°32′E</span>
+            <a className="hero-link" href="#explore-panel">Jetzt entdecken <span>↓</span></a>
           </div>
             </section>
 
@@ -762,9 +755,8 @@ function App() {
                 <p className="eyebrow">WebMCP-Demo</p>
                 <h1>Inspiration für deine nächste Tour.</h1>
                 <p className="inspiration-intro">
-                  Lass dir von einem AI-Tool Wanderungen empfehlen, die zu deinen
-                  Wünschen passen. Die Empfehlungen erscheinen hier, ohne deine
-                  manuellen Filter zu verändern.
+                  Lass dir von einem AI-Tool Wanderungen empfehlen, die zu deinen Wünschen passen.<br />
+                  Die Empfehlungen erscheinen hier, ohne deine manuellen Filter zu verändern.
                 </p>
               </div>
               {recommendations && (
