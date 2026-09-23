@@ -589,7 +589,7 @@ function App() {
           <div className="section-heading">
             <div>
               <p className="eyebrow">Die Wanderauswahl</p>
-              <h2>Finde dein nächstes Abenteuer</h2>
+              <h2>Wanderungen für dein nächstes Abenteuer</h2>
             </div>
             <p className={`result-count${filtersUpdated ? ' filters-updated' : ''}`} aria-live="polite"><strong>{filteredHikes.length}</strong> von {hikes.length} Wanderungen</p>
           </div>
