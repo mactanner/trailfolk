@@ -22,6 +22,24 @@ type HikeRecommendation = {
 
 type AppView = 'explore' | 'inspiration'
 
+type HikeFilters = {
+  minLength: number
+  maxLength: number
+  difficulty: 'All' | Difficulty
+  minElevation: number
+  maxDuration: number
+  region: 'All' | SwissRegion
+}
+
+const defaultHikeFilters: HikeFilters = {
+  minLength: 3,
+  maxLength: 25,
+  difficulty: 'All',
+  minElevation: 0,
+  maxDuration: 600,
+  region: 'All',
+}
+
 const isRegionOption = (value: string): value is 'All' | SwissRegion =>
   regionOptions.some((option) => option === value)
 
@@ -300,20 +318,8 @@ const RecommendationResults = ({
 }
 
 function App() {
-  const [minLength, setMinLength] = useState(3)
-  const [maxLength, setMaxLength] = useState(25)
-  const [difficulty, setDifficulty] = useState<'All' | Difficulty>('All')
-  const [minElevation, setMinElevation] = useState(0)
-  const [maxDuration, setMaxDuration] = useState(600)
-  const [region, setRegion] = useState<'All' | SwissRegion>('All')
-  const filtersRef = useRef({
-    minLength: 3,
-    maxLength: 25,
-    difficulty: 'All' as 'All' | Difficulty,
-    minElevation: 0,
-    maxDuration: 600,
-    region: 'All' as 'All' | SwissRegion,
-  })
+  const [filters, setFilters] = useState<HikeFilters>(defaultHikeFilters)
+  const filtersRef = useRef<HikeFilters>(defaultHikeFilters)
   const initialRenderRef = useRef(true)
   const [filtersUpdated, setFiltersUpdated] = useState(false)
   const [recommendations, setRecommendations] = useState<HikeRecommendation[] | null>(null)
@@ -321,13 +327,27 @@ function App() {
   const [activeView, setActiveView] = useState<AppView>('explore')
 
   const filteredHikes = useMemo(
-    () => getFilteredHikes(minLength, maxLength, difficulty, minElevation, maxDuration, region),
-    [difficulty, maxDuration, maxLength, minElevation, minLength, region],
+    () =>
+      getFilteredHikes(
+        filters.minLength,
+        filters.maxLength,
+        filters.difficulty,
+        filters.minElevation,
+        filters.maxDuration,
+        filters.region,
+      ),
+    [filters],
   )
 
   useEffect(() => {
-    filtersRef.current = { minLength, maxLength, difficulty, minElevation, maxDuration, region }
-  }, [difficulty, maxDuration, maxLength, minElevation, minLength, region])
+    filtersRef.current = filters
+  }, [filters])
+
+  const updateFilters = (changes: Partial<HikeFilters>) => {
+    const nextFilters = { ...filtersRef.current, ...changes }
+    filtersRef.current = nextFilters
+    setFilters(nextFilters)
+  }
 
   const selectView = (view: AppView) => {
     setActiveView(view)
@@ -341,7 +361,7 @@ function App() {
     setFiltersUpdated(true)
     const timeoutId = window.setTimeout(() => setFiltersUpdated(false), 700)
     return () => window.clearTimeout(timeoutId)
-  }, [difficulty, maxDuration, maxLength, minElevation, minLength, region])
+  }, [filters])
 
   useEffect(() => {
     const modelContext = document.modelContext
@@ -356,7 +376,7 @@ function App() {
         {
           name: 'filter_hikes',
           description:
-          'Ändere die sichtbaren Filter der Schweizer Wanderauswahl nur dann, wenn der Benutzer ausdrücklich Filter setzen oder die Ergebnisliste einschränken möchte. Verwende minLength für "mindestens N km", maxLength für "höchstens N km", minElevation für "mindestens N Höhenmeter im Aufstieg", maxDuration für "höchstens N Minuten Gehzeit" und region für eine bestimmte Region. Nicht angegebene Filter behalten ihren aktuellen Wert.',
+          'Ändere die sichtbaren Filter der Schweizer Wanderauswahl nur dann, wenn der Benutzer ausdrücklich Filter setzen oder die Ergebnisliste einschränken möchte. Rufe dieses Tool pro Nutzeranfrage genau einmal auf und übergib alle erkannten Kriterien gemeinsam in einem Objekt. Übersetze natürliche deutsche Angaben in die Zahlenwerte: "mittelschwer" oder "mittel" ist difficulty Moderate, sechs Stunden sind maxDuration 360, und "rund 15 km" ist minLength 10 sowie maxLength 20. Verwende minLength für "mindestens N km", maxLength für "höchstens N km", minElevation für "mindestens N Höhenmeter im Aufstieg" und region für eine bestimmte Region. Nicht angegebene Filter behalten ihren aktuellen Wert. Rufe das Tool nach einer erfolgreichen Antwort nicht erneut für dieselbe Anfrage auf. Beispiel: "mittelschwere Wanderung in der Zentralschweiz – rund 15 km und maximal sechs Stunden" ergibt { difficulty: "Moderate", region: "Zentralschweiz", minLength: 10, maxLength: 20, maxDuration: 360 }.',
           inputSchema: hikeFilterInputSchema,
           annotations: {
             readOnlyHint: false,
@@ -368,13 +388,7 @@ function App() {
               ...requestedFilters,
             }
 
-            filtersRef.current = nextFilters
-            setMaxLength(nextFilters.maxLength)
-            setMinLength(nextFilters.minLength)
-            setDifficulty(nextFilters.difficulty)
-            setMinElevation(nextFilters.minElevation)
-            setMaxDuration(nextFilters.maxDuration)
-            setRegion(nextFilters.region)
+            updateFilters(requestedFilters)
 
             return {
               filters: nextFilters,
@@ -481,22 +495,9 @@ function App() {
             readOnlyHint: false,
           },
           execute: async () => {
-            filtersRef.current = {
-              minLength: 3,
-              maxLength: 25,
-              difficulty: 'All',
-              minElevation: 0,
-              maxDuration: 600,
-              region: 'All',
-            }
-            setMinLength(3)
-            setMaxLength(25)
-            setDifficulty('All')
-            setMinElevation(0)
-            setMaxDuration(600)
-            setRegion('All')
+            updateFilters(defaultHikeFilters)
             return {
-              filters: { minLength: 3, maxLength: 25, difficulty: 'All', minElevation: 0, maxDuration: 600, region: 'All' },
+              filters: defaultHikeFilters,
               count: hikes.length,
             }
           },
@@ -516,22 +517,17 @@ function App() {
   }, [activeView])
 
   const resetFilters = () => {
-    setMinLength(3)
-    setMaxLength(25)
-    setDifficulty('All')
-    setMinElevation(0)
-    setMaxDuration(600)
-    setRegion('All')
+    updateFilters(defaultHikeFilters)
   }
 
   const hikeGridClassName = `hike-grid${filtersUpdated ? ' filters-updated' : ''}`
   const hasActiveFilters =
-    minLength > 3 ||
-    maxLength < 25 ||
-    difficulty !== 'All' ||
-    minElevation > 0 ||
-    maxDuration < 600 ||
-    region !== 'All'
+    filters.minLength > 3 ||
+    filters.maxLength < 25 ||
+    filters.difficulty !== 'All' ||
+    filters.minElevation > 0 ||
+    filters.maxDuration < 600 ||
+    filters.region !== 'All'
 
   return (
     <div className="page-shell">
@@ -596,12 +592,12 @@ function App() {
           <div className="filter-summary" aria-live="polite" aria-label="Aktive Filter">
             <span className="filter-summary-label">Aktive Filter</span>
             <div className="filter-chips">
-              {minLength > 3 && <span className="filter-chip">ab {minLength.toLocaleString('de-DE')} km</span>}
-              {maxLength < 25 && <span className="filter-chip">bis {maxLength.toLocaleString('de-DE')} km</span>}
-              {difficulty !== 'All' && <span className="filter-chip">{difficulty === 'Easy' ? 'Einfach' : difficulty === 'Moderate' ? 'Mittel' : 'Schwierig'}</span>}
-              {minElevation > 0 && <span className="filter-chip">ab {minElevation.toLocaleString('de-DE')} m Aufstieg</span>}
-              {maxDuration < 600 && <span className="filter-chip">bis {formatDuration(maxDuration)}</span>}
-              {region !== 'All' && <span className="filter-chip">{region}</span>}
+              {filters.minLength > 3 && <span className="filter-chip">ab {filters.minLength.toLocaleString('de-DE')} km</span>}
+              {filters.maxLength < 25 && <span className="filter-chip">bis {filters.maxLength.toLocaleString('de-DE')} km</span>}
+              {filters.difficulty !== 'All' && <span className="filter-chip">{filters.difficulty === 'Easy' ? 'Einfach' : filters.difficulty === 'Moderate' ? 'Mittel' : 'Schwierig'}</span>}
+              {filters.minElevation > 0 && <span className="filter-chip">ab {filters.minElevation.toLocaleString('de-DE')} m Aufstieg</span>}
+              {filters.maxDuration < 600 && <span className="filter-chip">bis {formatDuration(filters.maxDuration)}</span>}
+              {filters.region !== 'All' && <span className="filter-chip">{filters.region}</span>}
               {!hasActiveFilters && <span className="filter-chip filter-chip-muted">Keine Einschränkungen</span>}
             </div>
           </div>
@@ -624,10 +620,10 @@ function App() {
               </label>
               <select
                 id="region"
-                value={region}
+                value={filters.region}
                 onChange={(event) => {
                   if (isRegionOption(event.target.value)) {
-                    setRegion(event.target.value)
+                    updateFilters({ region: event.target.value })
                   }
                 }}
               >
@@ -641,8 +637,8 @@ function App() {
               </label>
               <select
                 id="difficulty"
-                value={difficulty}
-                onChange={(event) => setDifficulty(event.target.value as 'All' | Difficulty)}
+                value={filters.difficulty}
+                onChange={(event) => updateFilters({ difficulty: event.target.value as 'All' | Difficulty })}
               >
                 {difficultyOptions.map((option) => (
                   <option key={option} value={option}>{option === 'All' ? 'Alle Stufen' : option === 'Easy' ? 'Einfach' : option === 'Moderate' ? 'Mittel' : 'Schwierig'}</option>
@@ -651,7 +647,7 @@ function App() {
 
               <label className="filter-label" htmlFor="duration">
                 <span>Wanderdauer bis</span>
-                <strong>{maxDuration === 600 ? 'Beliebig' : formatDuration(maxDuration)}</strong>
+                <strong>{filters.maxDuration === 600 ? 'Beliebig' : formatDuration(filters.maxDuration)}</strong>
               </label>
               <input
                 id="duration"
@@ -659,14 +655,14 @@ function App() {
                 min="60"
                 max="600"
                 step="30"
-                value={maxDuration}
-                onChange={(event) => setMaxDuration(Number(event.target.value))}
+                value={filters.maxDuration}
+                onChange={(event) => updateFilters({ maxDuration: Number(event.target.value) })}
               />
               <div className="range-ends"><span>1 Std.</span><span>10 Std.</span></div>
 
               <label className="filter-label" htmlFor="min-length">
                 <span>Strecke ab</span>
-                <strong>{minLength.toLocaleString('de-DE')} km</strong>
+                <strong>{filters.minLength.toLocaleString('de-DE')} km</strong>
               </label>
               <input
                 id="min-length"
@@ -674,14 +670,14 @@ function App() {
                 min="3"
                 max="25"
                 step="1"
-                value={minLength}
-                onChange={(event) => setMinLength(Math.min(Number(event.target.value), maxLength))}
+                value={filters.minLength}
+                onChange={(event) => updateFilters({ minLength: Math.min(Number(event.target.value), filters.maxLength) })}
               />
               <div className="range-ends"><span>3 km</span><span>25 km</span></div>
 
               <label className="filter-label" htmlFor="max-length">
                 <span>Strecke bis</span>
-                <strong>{maxLength.toLocaleString('de-DE')} km</strong>
+                <strong>{filters.maxLength.toLocaleString('de-DE')} km</strong>
               </label>
               <input
                 id="max-length"
@@ -689,14 +685,14 @@ function App() {
                 min="3"
                 max="25"
                 step="1"
-                value={maxLength}
-                onChange={(event) => setMaxLength(Math.max(Number(event.target.value), minLength))}
+                value={filters.maxLength}
+                onChange={(event) => updateFilters({ maxLength: Math.max(Number(event.target.value), filters.minLength) })}
               />
-              <div className="range-ends"><span>{minLength} km</span><span>25 km</span></div>
+              <div className="range-ends"><span>{filters.minLength} km</span><span>25 km</span></div>
 
               <label className="filter-label" htmlFor="elevation">
                 <span>Mindest-Höhenmeter</span>
-                <strong>{minElevation === 0 ? 'Beliebig' : `${minElevation.toLocaleString('de-DE')} m Aufstieg`}</strong>
+                <strong>{filters.minElevation === 0 ? 'Beliebig' : `${filters.minElevation.toLocaleString('de-DE')} m Aufstieg`}</strong>
               </label>
               <input
                 id="elevation"
@@ -704,8 +700,8 @@ function App() {
                 min="0"
                 max="1500"
                 step="50"
-                value={minElevation}
-                onChange={(event) => setMinElevation(Number(event.target.value))}
+                value={filters.minElevation}
+                onChange={(event) => updateFilters({ minElevation: Number(event.target.value) })}
               />
               <div className="range-ends"><span>Beliebig</span><span>1.500 m</span></div>
 

@@ -47,18 +47,20 @@ export const hikeFilterInputSchema = {
       type: 'number',
       minimum: 3,
       maximum: 25,
-      description: 'Minimale Weglänge in Kilometern. Verwende dies für "mindestens N km".',
+      description:
+        'Untere Grenze der Weglänge in Kilometern. Verwende dies für "mindestens N km". Bei "rund 15 km" setze minLength auf 10.',
     },
     maxLength: {
       type: 'number',
       minimum: 3,
       maximum: 25,
-      description: 'Maximale Weglänge in Kilometern.',
+      description:
+        'Obere Grenze der Weglänge in Kilometern. Verwende dies für "höchstens N km". Bei "rund 15 km" setze maxLength auf 20.',
     },
     difficulty: {
       type: 'string',
       enum: ['All', 'Easy', 'Moderate', 'Difficult'],
-      description: 'Erforderlicher Schwierigkeitsgrad.',
+      description: 'Erforderlicher Schwierigkeitsgrad. "leicht" entspricht Easy, "mittelschwer" oder "mittel" entspricht Moderate.',
     },
     minElevation: {
       type: 'number',
@@ -70,7 +72,8 @@ export const hikeFilterInputSchema = {
       type: 'number',
       minimum: 60,
       maximum: 600,
-      description: 'Maximale Gehzeit in Minuten.',
+      description:
+        'Maximale Gehzeit in Minuten, nicht Stunden. Rechne Stunden in Minuten um, zum Beispiel sechs Stunden = 360.',
     },
     region: {
       type: 'string',
