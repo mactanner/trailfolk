@@ -65,4 +65,11 @@ export const hikes: Hike[] = [
   { name: 'Val-Trupchun-Wildnisweg', region: 'Nationalpark', area: 'Graubünden', distance: 15.2, difficulty: 'Difficult', altitude: 2050, elevation: 720, time: '6 Std.', duration: 360, color: '#5e7362', emoji: '🦌' },
   { name: 'Torrent-Weg Leukerbad', region: 'Leukerbad', area: 'Wallis', distance: 5.8, difficulty: 'Easy', altitude: 1650, elevation: 240, time: '2 Std. 15 Min.', duration: 135, color: '#6d7d73', emoji: '🌲' },
   { name: 'Saas-Fee Alpwiesenweg', region: 'Saas-Fee', area: 'Wallis', distance: 8.9, difficulty: 'Moderate', altitude: 2200, elevation: 480, time: '4 Std.', duration: 240, color: '#71858b', emoji: '🏞️' },
+  { name: 'Schynige Platte–Faulhorn–First', region: 'Jungfrauregion', area: 'Berner Oberland', distance: 16.8, difficulty: 'Difficult', altitude: 2680, elevation: 1150, time: '7 Std. 30 Min.', duration: 450, color: '#6b6255', emoji: '🏔️' },
+  { name: 'Fründenhütte-Zustieg', region: 'Kandersteg', area: 'Berner Oberland', distance: 14.5, difficulty: 'Difficult', altitude: 2562, elevation: 1210, time: '7 Std.', duration: 420, color: '#4f6873', emoji: '🥾' },
+  { name: 'Wildhorn-Höhenweg', region: 'Crans-Montana', area: 'Wallis', distance: 19.6, difficulty: 'Difficult', altitude: 3250, elevation: 1380, time: '9 Std.', duration: 540, color: '#6c7180', emoji: '🗻' },
+  { name: 'Greina-Hochebene-Rundweg', region: 'Surselva', area: 'Graubünden', distance: 18.9, difficulty: 'Difficult', altitude: 2412, elevation: 1120, time: '8 Std.', duration: 480, color: '#5e766c', emoji: '🌄' },
+  { name: 'Monte-Tamaro–Lema-Gratweg', region: 'Lugano', area: 'Tessin', distance: 18.2, difficulty: 'Difficult', altitude: 1620, elevation: 1180, time: '7 Std.', duration: 420, color: '#7a664f', emoji: '⛰️' },
+  { name: 'Pizol–Gaflei-Alpenweg', region: 'St. Gallen', area: 'Ostschweiz', distance: 20.4, difficulty: 'Difficult', altitude: 2844, elevation: 1270, time: '8 Std. 30 Min.', duration: 510, color: '#536d79', emoji: '🏞️' },
+  { name: 'Via Alta della Vallemaggia', region: 'Vallemaggia', area: 'Tessin', distance: 22.6, difficulty: 'Difficult', altitude: 2450, elevation: 1450, time: '9 Std. 30 Min.', duration: 570, color: '#68745d', emoji: '🌲' },
 ]

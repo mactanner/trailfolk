@@ -94,7 +94,7 @@ const validateFilterInput = (input: HikeFilterInput): HikeFilterInput => {
     input.minElevation !== undefined &&
     (!Number.isFinite(input.minElevation) || input.minElevation < 0 || input.minElevation > 1500)
   ) {
-    throw new Error('minElevation muss eine Zahl zwischen 0 und 1500 sein.')
+    throw new Error('minElevation muss eine Zahl zwischen 0 und 1500 Aufstiegshöhenmetern sein.')
   }
   if (
     input.maxDuration !== undefined &&
@@ -376,7 +376,7 @@ function App() {
         {
           name: 'filter_hikes',
           description:
-          'Ändere die sichtbaren Filter der Schweizer Wanderauswahl nur dann, wenn der Benutzer ausdrücklich Filter setzen oder die Ergebnisliste einschränken möchte. Rufe dieses Tool pro Nutzeranfrage genau einmal auf und übergib alle erkannten Kriterien gemeinsam in einem Objekt. Übersetze natürliche deutsche Angaben in die Zahlenwerte: "mittelschwer" oder "mittel" ist difficulty Moderate, sechs Stunden sind maxDuration 360, und "rund 15 km" ist minLength 10 sowie maxLength 20. Verwende minLength für "mindestens N km", maxLength für "höchstens N km", minElevation für "mindestens N Höhenmeter im Aufstieg" und region für eine bestimmte Region. Nicht angegebene Filter behalten ihren aktuellen Wert. Rufe das Tool nach einer erfolgreichen Antwort nicht erneut für dieselbe Anfrage auf. Beispiel: "mittelschwere Wanderung in der Zentralschweiz – rund 15 km und maximal sechs Stunden" ergibt { difficulty: "Moderate", region: "Zentralschweiz", minLength: 10, maxLength: 20, maxDuration: 360 }.',
+          'Ändere die sichtbaren Filter der Schweizer Wanderauswahl nur dann, wenn der Benutzer ausdrücklich Filter setzen oder die Ergebnisliste einschränken möchte. Rufe dieses Tool pro Nutzeranfrage genau einmal auf und übergib alle erkannten Kriterien gemeinsam in einem Objekt. Übersetze natürliche deutsche Angaben in die Zahlenwerte: "mittelschwer" oder "mittel" ist difficulty Moderate, sechs Stunden sind maxDuration 360, und "rund 15 km" ist minLength 10 sowie maxLength 20. Verwende minLength für "mindestens N km", maxLength für "höchstens N km", minElevation für "mindestens N Höhenmeter Aufstieg (bergauf, nicht Meter über Meer)" und region für eine bestimmte Region. Nicht angegebene Filter behalten ihren aktuellen Wert. Rufe das Tool nach einer erfolgreichen Antwort nicht erneut für dieselbe Anfrage auf. Beispiel: "mittelschwere Wanderung in der Zentralschweiz – rund 15 km und maximal sechs Stunden" ergibt { difficulty: "Moderate", region: "Zentralschweiz", minLength: 10, maxLength: 20, maxDuration: 360 }.',
           inputSchema: hikeFilterInputSchema,
           annotations: {
             readOnlyHint: false,
@@ -426,7 +426,7 @@ function App() {
         {
           name: 'recommend_hikes',
           description:
-            'Empfiehlt bis zu drei passende Wanderungen ausschließlich im Tab „Inspiration“. Verwende optionale Kriterien wie Schwierigkeit, Region, Weglänge, Höhenmeter und maximale Gehzeit. Übergebe qualitative oder freie Wünsche zusätzlich in preference, zum Beispiel "eine Tour mit einem krönenden Dessert danach". Verwende dieses Tool genau einmal pro Empfehlungsanfrage und nicht zusätzlich filter_hikes. Ändert die manuell gesetzten Filter nicht. Verwende anschließend genau einmal show_recommendation_summary mit einer Erklärung pro Empfehlung.',
+            'Empfiehlt bis zu drei passende Wanderungen ausschließlich im Tab „Inspiration“. Verwende optionale Kriterien wie Schwierigkeit, Region, Weglänge, Aufstiegshöhenmeter (bergauf, nicht Meter über Meer) und maximale Gehzeit. Übergebe qualitative oder freie Wünsche zusätzlich in preference, zum Beispiel "eine Tour mit einem krönenden Dessert danach". Verwende dieses Tool genau einmal pro Empfehlungsanfrage und nicht zusätzlich filter_hikes. Ändert die manuell gesetzten Filter nicht. Verwende anschließend genau einmal show_recommendation_summary mit einer Erklärung pro Empfehlung.',
           inputSchema: hikeRecommendationInputSchema,
           annotations: {
             readOnlyHint: false,
@@ -574,7 +574,7 @@ function App() {
             <p className="eyebrow">Ausgewählte Wanderungen aus der Schweiz</p>
             <h1>Finde deine nächste <span>Berggeschichte.</span></h1>
             <p className="hero-intro">
-              Fünfzig abwechslungsreiche Wanderungen durch die Schweiz.<br />
+              Über fünfzig abwechslungsreiche Wanderungen durch die Schweiz.<br />
               Von stillen Wegen am See bis zu hochalpinen Abenteuern.
             </p>
             <a className="hero-link" href="#explore-panel">Jetzt entdecken <span>↓</span></a>
@@ -612,7 +612,7 @@ function App() {
                 <button type="button" onClick={resetFilters}>Zurücksetzen</button>
               </div>
               <p className="filters-intro">
-                Passe die Auswahl manuell an oder steuere die Filter direkt über WebMCP.
+                Passe die Auswahl manuell an oder steuere die Filter direkt über WebMCP. Die Höhenmeter meinen den kumulierten Aufstieg bergauf, nicht die Höhe über Meer.
               </p>
 
               <label className="filter-label" htmlFor="region">
@@ -691,7 +691,7 @@ function App() {
               <div className="range-ends"><span>{filters.minLength} km</span><span>25 km</span></div>
 
               <label className="filter-label" htmlFor="elevation">
-                <span>Mindest-Höhenmeter</span>
+                <span>Mindest-Aufstieg (bergauf)</span>
                 <strong>{filters.minElevation === 0 ? 'Beliebig' : `${filters.minElevation.toLocaleString('de-DE')} m Aufstieg`}</strong>
               </label>
               <input
@@ -703,7 +703,7 @@ function App() {
                 value={filters.minElevation}
                 onChange={(event) => updateFilters({ minElevation: Number(event.target.value) })}
               />
-              <div className="range-ends"><span>Beliebig</span><span>1.500 m</span></div>
+              <div className="range-ends"><span>Beliebig</span><span>1.500 m Aufstieg</span></div>
 
               <div className="filter-note">
                 <span>✦</span>

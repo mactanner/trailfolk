@@ -66,7 +66,7 @@ export const hikeFilterInputSchema = {
       type: 'number',
       minimum: 0,
       maximum: 1500,
-      description: 'Mindestanzahl an Höhenmetern im Aufstieg.',
+      description: 'Mindestanzahl der kumulierten Aufstiegshöhenmeter bergauf, nicht die Höhe über Meer.',
     },
     maxDuration: {
       type: 'number',
